@@ -59,21 +59,20 @@ function playGame() {
         playerSelection = getUserChoice();
         computerSelection = getComputerChoice();
 
-        console.log(playRound(playerSelection, computerSelection));
-
-        console.log(`Score: ${playerScore} - ${computerScore}`)
+        alert(playRound(playerSelection, computerSelection));
     }
 
-    console.log('---');
-    console.log(`Final Score: ${playerScore} - ${computerScore}`);
-    
+    let result;
+
     if(playerScore > computerScore) {
-        console.log('The User wins the game of Rock Paper Scissors!');
+        result = 'The User wins the game of Rock Paper Scissors!';
     } else if(computerScore > playerScore) {
-        console.log('The Computer wins the game of Rock Paper Scissors!');
+        result = 'The Computer wins the game of Rock Paper Scissors!';
     } else {
-        console.log('Draw! Both players tied!')
+        result = 'Draw! Both players tied!';
     }
+
+    alert(`---\nFinal Score: ${playerScore} - ${computerScore}\n${result}`);
 }
 
 playGame();
