@@ -1,6 +1,16 @@
 let playerScore = 0;
 let computerScore = 0;
 
+let computerSelection;
+let playerSelection;
+
+const playerActions = document.querySelectorAll('button');
+
+const headingForPlayerScore = document.querySelector('#player_score');
+const headingForComputerScore = document.querySelector('#computer_score');
+
+const resultsSection = document.querySelector('.results')
+
 function getComputerChoice() {
     let computerChoice = (Math.random() * 3) + 1;
     computerChoice = Math.floor(computerChoice);
@@ -14,18 +24,47 @@ function getComputerChoice() {
     }
 }
 
-function getUserChoice() {
-    let userChoice = prompt("Type what you want to play: \n'Rock', 'Paper', or 'Scissors'");
-    userChoice = userChoice.toLowerCase();
+let gameLoop = 0;
 
-    return userChoice;
+for(let i = 0; i < gameLoop; i++) {
+    showResult(checkScoreForWinner());
+    
+    for(let i = 0; i < playerActions.length; i++) {
+        playerActions[i].addEventListener('click', function() {
+            headingForPlayerScore.innerHTML = playerScore;
+            headingForComputerScore.innerHTML = computerScore;
+    
+            playerSelection = playerActions[i].innerHTML.toLowerCase();
+    
+            computerSelection = getComputerChoice();
+            console.log(computerSelection);
+            console.log(playerSelection);
+        });
+    }
+
+    gameLoop++;
 }
 
-let computerSelection;
-let playerSelection;
+function showResult(result) {
+    resultsSection.innerHTML = result;
+}
+
+function checkScoreForWinner() {
+    let result;
+
+    if(playerScore == 5) {
+        result = 'The User wins the game of Rock Paper Scissors!';
+    } else if(computerScore == 5) {
+        result = 'The Computer wins the game of Rock Paper Scissors!';
+    } else {
+        result = playRound(playerSelection, computerSelection);
+    }
+
+    return result;
+}
 
 function playRound(playerSelection, computerSelection) {
-    // Draw handling
+
     if(playerSelection == "rock" && computerSelection == "rock") {
         return "Draw! Both players chose rock!";
     } else if(playerSelection == "paper" && computerSelection == "paper") {
@@ -34,45 +73,15 @@ function playRound(playerSelection, computerSelection) {
         return "Draw! Both players chose scissors!";
     }
 
-    // User Win Situation
     if(playerSelection == "rock" && computerSelection == "scissors" || playerSelection == "paper" && computerSelection == "rock" || playerSelection == "scissors" && computerSelection == "paper") {
         playerScore++;
 
         return `You Win! ${playerSelection} beats ${computerSelection}`;
-    }
-
-    // User Lose Situation
-    else if(playerSelection == "rock" && computerSelection == "paper" || playerSelection == "paper" && computerSelection == "scissors" || playerSelection == "scissors" && computerSelection == "rock") {
+    } else if(playerSelection == "rock" && computerSelection == "paper" || playerSelection == "paper" && computerSelection == "scissors" || playerSelection == "scissors" && computerSelection == "rock") {
         computerScore++;
 
         return `You Lose! ${computerSelection} beats ${playerSelection}`;
-    }
-
-    // User Entered Invalid Choice
-    else {
+    } else {
         return `User entered invalid choice '${playerSelection}'`;
     }
 }
-
-function playGame() {
-    for(let i = 0; i < 5; i++) {
-        playerSelection = getUserChoice();
-        computerSelection = getComputerChoice();
-
-        alert(playRound(playerSelection, computerSelection));
-    }
-
-    let result;
-
-    if(playerScore > computerScore) {
-        result = 'The User wins the game of Rock Paper Scissors!';
-    } else if(computerScore > playerScore) {
-        result = 'The Computer wins the game of Rock Paper Scissors!';
-    } else {
-        result = 'Draw! Both players tied!';
-    }
-
-    alert(`---\nFinal Score: ${playerScore} - ${computerScore}\n${result}`);
-}
-
-playGame();
