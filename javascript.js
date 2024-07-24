@@ -24,25 +24,17 @@ function getComputerChoice() {
     }
 }
 
-let gameLoop = 0;
+for(let i = 0; i < playerActions.length; i++) {
+    playerActions[i].addEventListener('click', function() {
+        headingForPlayerScore.innerHTML = playerScore;
+        headingForComputerScore.innerHTML = computerScore;
 
-for(let i = 0; i < gameLoop; i++) {
-    showResult(checkScoreForWinner());
-    
-    for(let i = 0; i < playerActions.length; i++) {
-        playerActions[i].addEventListener('click', function() {
-            headingForPlayerScore.innerHTML = playerScore;
-            headingForComputerScore.innerHTML = computerScore;
-    
-            playerSelection = playerActions[i].innerHTML.toLowerCase();
-    
-            computerSelection = getComputerChoice();
-            console.log(computerSelection);
-            console.log(playerSelection);
-        });
-    }
+        playerSelection = playerActions[i].innerHTML.toLowerCase();
 
-    gameLoop++;
+        computerSelection = getComputerChoice();
+
+        showResult(checkScoreForWinner());
+    });
 }
 
 function showResult(result) {
